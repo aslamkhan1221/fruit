@@ -8,6 +8,7 @@ import { motion } from 'framer-motion';
 
 export default function Navbar() {
   const { cartCount, setIsCartOpen } = useCart();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-stone-100">
@@ -43,12 +44,56 @@ export default function Navbar() {
                 </motion.span>
               )}
             </button>
-            <button className="md:hidden p-2 text-stone-600">
+            <button 
+              className="md:hidden p-2 text-stone-600"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
               <Menu className="w-6 h-6" />
             </button>
           </div>
         </div>
       </div>
+
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <motion.div 
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: 'auto' }}
+          exit={{ opacity: 0, height: 0 }}
+          className="md:hidden bg-white border-b border-stone-100 overflow-hidden"
+        >
+          <div className="px-4 pt-2 pb-4 space-y-1">
+            <Link 
+              href="/" 
+              className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-orange-500 hover:bg-stone-50"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Home
+            </Link>
+            <Link 
+              href="/planner" 
+              className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-orange-500 hover:bg-stone-50"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Smart Planner
+            </Link>
+            <Link 
+              href="/#products" 
+              className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-orange-500 hover:bg-stone-50"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Shop
+            </Link>
+            <Link 
+              href="/#about" 
+              className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:text-orange-500 hover:bg-stone-50"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              About
+            </Link>
+          </div>
+        </motion.div>
+      )}
     </nav>
   );
 }
