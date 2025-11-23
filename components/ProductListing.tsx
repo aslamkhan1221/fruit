@@ -21,7 +21,12 @@ export default function ProductListing() {
       try {
         const res = await fetch('/api/fruits');
         const data = await res.json();
-        setFruits(data);
+        if (Array.isArray(data)) {
+          setFruits(data);
+        } else {
+          console.error('Invalid data format received:', data);
+          setFruits([]);
+        }
       } catch (error) {
         console.error('Failed to fetch fruits', error);
       } finally {
